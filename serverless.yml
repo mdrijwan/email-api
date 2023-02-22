@@ -1,0 +1,83 @@
+service: rijwan-email-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-southeast-1'}
+  apiGateway:
+    description: An API service for send email from payload
+  deploymentBucket:
+    name: ${self:provider.environment.DEPLOY_BUCKET}
+  timeout: 3
+  environment:
+    SSM_PARAM: /${self:service}/${opt:stage, self:provider.stage}
+    DEPLOY_BUCKET: ${self:service}-${opt:stage, self:provider.stage}
+    LOG_LEVEL: ${self:custom.logLevel.${opt:stage, self:provider.stage}}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ssm:GetParameter
+          Resource: arn:aws:ssm:${self:provider.region}:${self:custom.account}:parameter${self:custom.ssm}
+
+configValidationMode: off
+
+custom:
+  account: ${aws:accountId}
+  ssm: ${self:provider.environment.SSM_PARAM}
+  logLevel:
+    dev: DEBUG
+    staging: INFO
+    prod: ERROR
+  documentation:
+    api:
+      info:
+        version: '1.0.0'
+        title: 'Email API'
+        description: 'An API service to send email'
+      tags:
+        - name: 'EmailApi'
+          description: 'API to send email from payload'
+    resources:
+      - path: '/email'
+        description: 'Send Email'
+    models:
+      - name: RequestModel
+        description: 'Schema for sending email'
+        contentType: 'application/json'
+        schema: ${file(./src/validator/requestSchema.json)}
+      - name: ResponseModel
+        description: 'Schema for the API response'
+        contentType: 'application/json'
+        schema: ${file(./src/validator/responseSchema.json)}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-aws-documentation
+  - serverless-offline
+
+functions:
+  sendEmail:
+    handler: src/api/handler/email.send
+    events:
+      - http:
+          method: POST
+          path: /email
+          cors: true
+          documentation:
+            summary: Send email from payload
+            tags:
+              - sendEmail
+            requestModels:
+              'application/json': RequestModel
+            methodResponses:
+              - statusCode: '200'
+                responseModels:
+                  'application/json': ResponseModel
+          request:
+            schemas:
+              application/json: ${file(src/validator/requestSchema.json)}
