@@ -28,6 +28,8 @@ To fix the issues with code linting:
 To check code linting before committing:
 `npm run check-code`
 
+To run the unit tests:
+`npm run test`
 ### API Diagram
 
 <img src="/src/resources/emailApiDiagram.png" alt="API Diagram"/>
