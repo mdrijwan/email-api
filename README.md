@@ -31,3 +31,7 @@ To check code linting before committing:
 #### Collaboration
 
 For collaboration, branch out to your feature branch and please follow the [semantic committ message](https://kapeli.com/cheat_sheets/Semantic_Commits.docset/Contents/Resources/Documents/index) formats while pushing new commits.
+
+#### Documentations
+
+The API documentation can be found [here](https://app.swaggerhub.com/apis/mdrijwan/dev-rijwan_email_api/1.0.0)
