@@ -1,0 +1,42 @@
+{
+  "name": "rijwan-email-api",
+  "version": "1.0.0",
+  "description": "a service to send email",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint --fix 'src/**/*.ts'",
+    "format": "prettier --write --cache 'src/**/*.ts'",
+    "code-check": "npm run format && npm run lint:fix",
+    "start": "sls offline start --verbose --noAuth",
+    "predeploy:dev": "sls deploy --config serverless.data.yml --verbose",
+    "deploy:dev": "sls deploy --verbose"
+  },
+  "keywords": [
+    "Automate",
+    "Pro",
+    "API"
+  ],
+  "author": "Md Rijwan Razzaq Matin",
+  "license": "ISC",
+  "devDependencies": {
+    "@aws-sdk/client-ses": "^3.276.0",
+    "@aws-sdk/client-sesv2": "^3.276.0",
+    "@aws-sdk/client-ssm": "^3.276.0",
+    "@types/aws-lambda": "^8.10.110",
+    "@types/node": "^18.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "serverless-aws-documentation": "^1.1.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-typescript": "^2.1.4"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^1.5.1"
+  }
+}
