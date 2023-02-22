@@ -23,6 +23,10 @@ provider:
           Action:
             - ssm:GetParameter
           Resource: arn:aws:ssm:${self:provider.region}:${self:custom.account}:parameter${self:custom.ssm}
+        - Effect: Allow
+          Action:
+            - ses:SendEmail
+          Resource: arn:aws:ses:${self:provider.region}:${aws:accountId}:identity/*
 
 configValidationMode: off
 
@@ -68,6 +72,11 @@ functions:
           method: POST
           path: /email
           cors: true
+          authorizer:
+            name: requestAuthorizer
+            type: request
+            resultTtlInSeconds: 60
+            identitySource: method.request.header.Authorization
           documentation:
             summary: Send email from payload
             tags:
@@ -81,3 +90,5 @@ functions:
           request:
             schemas:
               application/json: ${file(src/validator/requestSchema.json)}
+  requestAuthorizer:
+    handler: src/validator/requestAuthorizer.handler
