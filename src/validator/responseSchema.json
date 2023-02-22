@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft-04/schema",
+  "title": "Send Email Response Schema",
+  "description": "API Response to sent email event",
+  "type": "object",
+  "required": [
+    "code",
+    "message",
+    "data"
+  ],
+  "properties": {
+    "code": {
+      "title": "CodeSchema",
+      "description": "Status code of the API response",
+      "type": "integer"
+    },
+    "message": {
+      "title": "MessageSchema",
+      "description": "Generic message of the API response",
+      "type": "string"
+    },
+    "data": {
+      "title": "DataSchema",
+      "description": "An explanation about the purpose of this instance.",
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "title": "messageIdSchema",
+          "description": "The messageId from AWS",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
