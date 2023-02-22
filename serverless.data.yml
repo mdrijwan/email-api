@@ -1,0 +1,27 @@
+service: rijwan-email-data
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, 'ap-southeast-1'}
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: automate-${self:provider.stage}-bucket
+  environment:
+    DEPLOY_BUCKET: ${self:custom.stackName}-${opt:stage, self:provider.stage}
+
+custom:
+  stackName: rijwan-email-api
+
+resources:
+  Resources:
+    ProBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.DEPLOY_BUCKET}
+        AccessControl: Private
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
