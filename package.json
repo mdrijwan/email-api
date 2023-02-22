@@ -9,8 +9,8 @@
     "format": "prettier --write --cache 'src/**/*.ts'",
     "code-check": "npm run format && npm run lint:fix",
     "start": "sls offline start --verbose --noAuth",
-    "predeploy:dev": "sls deploy --config serverless.data.yml --verbose",
-    "deploy:dev": "sls deploy --verbose"
+    "predeploy": "sls deploy --config serverless.data.yml --verbose",
+    "deploy": "sls deploy --verbose"
   },
   "keywords": [
     "Automate",
