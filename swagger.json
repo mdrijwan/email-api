@@ -1,0 +1,106 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+      "description" : "An API service to send email",
+      "version" : "1.0.0",
+      "title" : "email-api"
+    },
+    "host" : "zyi9fu5o72.execute-api.ap-southeast-1.amazonaws.com",
+    "basePath" : "/dev",
+    "tags" : [ {
+      "name" : "EmailApi",
+      "description" : "API to send email from payload"
+    } ],
+    "schemes" : [ "https" ],
+    "paths" : {
+      "/email" : {
+        "post" : {
+          "tags" : [ "sendEmail" ],
+          "summary" : "Send email from payload",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "RequestModel",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/RequestModel"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "schema" : {
+                "$ref" : "#/definitions/ResponseModel"
+              }
+            }
+          }
+        },
+        "options" : {
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "headers" : {
+                "Access-Control-Allow-Headers" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions" : {
+      "RequestModel" : {
+        "type" : "object",
+        "properties" : {
+          "subject" : {
+            "type" : "string",
+            "title" : "EmailSubject"
+          },
+          "to" : {
+            "type" : "string",
+            "title" : "EmailRecipient"
+          },
+          "message" : {
+            "type" : "string",
+            "title" : "EmailBody"
+          }
+        },
+        "title" : "Send Email Request Schema",
+        "description" : "Schema for sending email"
+      },
+      "ResponseModel" : {
+        "type" : "object",
+        "required" : [ "code", "data", "message" ],
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "Status code of the API response",
+            "title" : "CodeSchema"
+          },
+          "data" : {
+            "type" : "object",
+            "description" : "An explanation about the purpose of this instance.",
+            "title" : "DataSchema",
+            "properties" : {
+              "messageId" : {
+                "type" : "string",
+                "description" : "The messageId from AWS",
+                "title" : "messageIdSchema"
+              }
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Generic message of the API response",
+            "title" : "MessageSchema"
+          }
+        },
+        "title" : "Send Email Response Schema",
+        "description" : "Schema for the API response"
+      }
+    }
+  }
