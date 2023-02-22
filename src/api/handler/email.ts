@@ -1,7 +1,7 @@
 import { Logger } from '@aws-lambda-powertools/logger'
 import { APIGatewayEvent, Context } from 'aws-lambda'
 import { MessageUtil } from '../../helpers'
-import { EmailController } from '../controller/email'
+import { EmailController } from '../controller/emailController'
 import { ErrorType, MessageType, ServiceType } from '../model/dto'
 
 const logger = new Logger({
